@@ -7,6 +7,10 @@ class PacketReader():
         return self.pos >= len(self.data)
 
     def read(self, count: int)->int:
+        raw = self.read_raw(count)
+        return int(raw, 2)
+    
+    def read_raw(self, count: int)->str:
         self.pos += count
-        return int(self.data[self.pos - count:self.pos] , 2)
+        return self.data[self.pos - count:self.pos]
         
