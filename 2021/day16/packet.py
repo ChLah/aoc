@@ -26,22 +26,7 @@ class Packet:
                 return
     
     def __read_operator(self, reader: PacketReader):
-        length_type = reader.read(1)
-        children: list[Packet] = []
-
-        if length_type == 0:
-            total_bits_len = reader.read(15)
-            limit = reader.pos + total_bits_len
-            while reader.pos < limit:
-                p = Packet(reader)
-                self.sum_version += p.sum_version
-                children.append(p)
-        elif length_type == 1:
-            count_packets = reader.read(11)
-            for _ in range(count_packets):
-                p = Packet(reader)
-                self.sum_version += p.sum_version
-                children.append(p)
+        children = self.__read_children(reader)
         
         if self.type_id == 0:
             self.value = sum(c.value for c in children)
@@ -59,3 +44,23 @@ class Packet:
             self.value = 1 if children[0].value < children[1].value else 0
         elif self.type_id == 7:
             self.value = 1 if children[0].value == children[1].value else 0
+    
+    def __read_children(self, reader: PacketReader)->"list[Packet]":
+        length_type = reader.read(1)
+        children: list[Packet] = []
+
+        if length_type == 0:
+            total_bits_len = reader.read(15)
+            limit = reader.pos + total_bits_len
+            while reader.pos < limit:
+                p = Packet(reader)
+                self.sum_version += p.sum_version
+                children.append(p)
+        elif length_type == 1:
+            count_packets = reader.read(11)
+            for _ in range(count_packets):
+                p = Packet(reader)
+                self.sum_version += p.sum_version
+                children.append(p)
+        
+        return children
