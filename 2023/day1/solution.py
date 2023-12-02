@@ -28,9 +28,7 @@ def getNumericValues(line: str, withTexts: bool)->List[int]:
                     break
         
         idx += 1
-
-
-    
+        
     return ret
 
 
