@@ -32,8 +32,8 @@ def main():
             print('Part must be 1 or 2')
             exit()
     
-    solution = import_module(f'solutions.year{args.year}.day{args.day}.solution').Solution(args.day, args.year)
-    solution.solve(args.part)
+        solution = import_module(f'solutions.year{args.year}.day{args.day}.solution').Solution(args.day, args.year)
+        solution.solve(args.part)
 
 
 if __name__ == '__main__':
