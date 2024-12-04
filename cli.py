@@ -16,7 +16,7 @@ def main():
     loadparser.add_argument('-s', '--session', type=str, required=True, help='Required: The session id, can be found in your browser cookies')
 
     solveparser = subparsers.add_parser('solve', help='Solves the challenge')
-    solveparser.add_argument('-p', '--part', type=int, default=1, choices=(1, 2), help='Required: The part of the challenge, defaults to 1')
+    solveparser.add_argument('-p', '--part', type=int, default=0, choices=(0, 1, 2), help='Required: The part of the challenge, defaults to 0 (means both)')
 
     args = parser.parse_args()
 
@@ -28,8 +28,8 @@ def main():
         load_challenge_files(args.day, args.year, args.session)
     
     elif args.command == 'solve':
-        if args.part < 1 or args.part > 2:
-            print('Part must be 1 or 2')
+        if args.part < 0 or args.part > 2:
+            print('Part must be 0, 1 or 2')
             exit()
     
         solution = import_module(f'solutions.year{args.year}.day{args.day}.solution').Solution(args.day, args.year)
