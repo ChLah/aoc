@@ -15,7 +15,6 @@ class Solution(SolutionBase):
 
     def solve_1(self, lines: list[str]):
         return sum(self.max_joltage(line, 2) for line in lines)
-        return 0
     
     def solve_2(self, lines: list[str]):
         return sum(self.max_joltage(line, 12) for line in lines)
