@@ -20,6 +20,8 @@ def load_challenge_files(day:int, year:int, session:str):
     destination_path = path.join(base_path, 'input.txt')
     if not path.exists(destination_path):
         url = f'https://adventofcode.com/{year}/day/{day}/input'
+
+        print(f'Downloading input for year {year}, day {day} from {url}')
         
         headers = {
             'Referer': f'https://adventofcode.com/{year}/day/{day}',
